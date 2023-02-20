@@ -74,4 +74,13 @@ const updateOne = async (id, body) => {
   }
 };
 
-module.exports = { getAll, getOne, create, MenuItems, updateOne };
+const deleteOne = async (id) => {
+  try {
+    const menuItem = await MenuItems.findByIdAndDelete(id);
+    return menuItem;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAll, getOne, create, MenuItems, updateOne, deleteOne };
