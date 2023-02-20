@@ -82,6 +82,12 @@ const getByStatus = async (status) => {
   return orders;
 };
 
+const totalSales = async () => {
+  const allOrders = await getAll();
+  const allItemsInAllOrders = allOrders.map((order) => order.items).flat();
+  return allItemsInAllOrders.reduce((a, c) => a + c.quantity * c.item.price, 0);
+};
+
 module.exports = {
   getAll,
   getOne,
@@ -89,5 +95,6 @@ module.exports = {
   update,
   remove,
   getByStatus,
-  Order
+  Order,
+  totalSales
 };
