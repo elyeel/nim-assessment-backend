@@ -82,6 +82,26 @@ const getByStatus = async (status) => {
   return orders;
 };
 
+const totalSales = async (from, to) => {
+  const dateRange = { $gte: from, $lte: to };
+  const allOrders = await Order.find({ updatedAt: dateRange }).populate(
+    "items.item"
+  );
+  const allItemsInAllOrders = allOrders.map((order) => order.items).flat();
+  // return allItemsInAllOrders;
+  return allItemsInAllOrders.reduce((a, c) => a + c.quantity * c.item.price, 0);
+};
+
+const queryByOrderStatus = async (status, from, to) => {
+  const dateRange = { $gte: from, $lte: to };
+  const orders = await Order.find({
+    status,
+    updatedAt: dateRange
+  }).populate("items");
+  // const orders = await getByStatus(status);
+  return orders;
+};
+
 module.exports = {
   getAll,
   getOne,
@@ -89,5 +109,7 @@ module.exports = {
   update,
   remove,
   getByStatus,
-  Order
+  Order,
+  totalSales,
+  queryByOrderStatus
 };
