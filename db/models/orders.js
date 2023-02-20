@@ -88,6 +88,11 @@ const totalSales = async () => {
   return allItemsInAllOrders.reduce((a, c) => a + c.quantity * c.item.price, 0);
 };
 
+const queryByOrderStatus = async (status) => {
+  const orders = await getByStatus(status);
+  return orders;
+};
+
 module.exports = {
   getAll,
   getOne,
@@ -96,5 +101,6 @@ module.exports = {
   remove,
   getByStatus,
   Order,
-  totalSales
+  totalSales,
+  queryByOrderStatus
 };
